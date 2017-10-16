@@ -1,10 +1,25 @@
 - name: Notify of Red Hat repos/channels
   debug: msg="REPOS MUST BE ATTACHED.. rhel-7-server-rpms & rhel-7-server-rh-common-rpms"
+  when: "'masters' in {{ group_names }}"
+- name: Enable gluster for rhel repo.
+  shell: "subscription-manager repos --enable=rh-gluster-3-for-rhel-7-server-rpms"
+  when: "'masters' in {{ group_names }}"
 - name: Check CNS deploy is installed on masters
   yum: pkg=cns-deploy state=installed
   when: "'masters' in {{ group_names }}"
+- name: Check heketi is installed on masters
+  yum: pkg=heketi-client state=installed
+  when: "'masters' in {{ group_names }}"
+- name: atomic packages needed..
+  yum: pkg={{item}} state=installed
+  with_items:
+    - atomic-openshift-clients
+    - atomic-openshift
 - name: check gluster client is installed
-  yum: pkg={{item}} state=latest
+  yum: pkg={{item}} state=installed
   with_items:
     - glusterfs
     - glusterfs-fuse
+- name: Assert that dm_thin_pool is there
+  modprobe: name=dm_thin_pool state=present
+  when: "'gluster' in {{ group_names }}"

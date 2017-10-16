@@ -1,5 +1,5 @@
 - name: Let the client talk to the container..
-  shell: "export HEKETI_CLI_SERVER={{heketi-cns.apps.yourdomain}}"
+  shell: "export HEKETI_CLI_SERVER={{heketi-cns.apps.openshift.local}}"
   when: "'masters' in {{ group_names }}"
 - name: verify heketi is loaded with the topology provded..
   shell: heketi-cli topology info

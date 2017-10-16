@@ -1,0 +1,3 @@
+- name: Create the CNS project in OCP cluster
+  #If this fails, try a different master in the when clause below
+  debug: msg="Manual Process, please 'oc login' and then 'oc new-project cns'"

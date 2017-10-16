@@ -1,0 +1,4 @@
+- name: ping all the nodes for good measure
+  ping: "{{ item }}"
+  with_inventory_hostnames:
+    - all

@@ -1,0 +1,10 @@
+- name: Notify of Red Hat repos/channels
+  debug: msg="REPOS MUST BE ATTACHED.. rhel-7-server-rpms & rhel-7-server-rh-common-rpms"
+- name: Check CNS deploy is installed on masters
+  yum: pkg=cns-deploy state=installed
+  when: "'masters' in {{ group_names }}"
+- name: check gluster client is installed
+  yum: pkg={{item}} state=latest
+  with_items:
+    - glusterfs
+    - glusterfs-fuse

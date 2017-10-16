@@ -1,0 +1,5 @@
+- name: "TOPOLOGY FILE!"
+  debug: msg="YOU MUST HAVE A TOPOLOGY FILE! IF this fails, you don't have a topology file in the right place"
+- name: "DEPLOY CNS!"
+  shell: cns-deploy -n cns -g topology.json
+  

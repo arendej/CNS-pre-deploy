@@ -1,3 +1,4 @@
 - name: Give special block device access to project, for CNS
-  shell: oadm policy add-scc-to-user privileged -z cns
-  when: "'gluster' in {{ group_names }}"
+  debug: msg="MANUAL PROCESS !!!!  please run the following on ONE master.. "
+  debug: msg="oc login   then     oadm policy add-scc-to-user privileged -z cns"
+#  when: ansible_nodename == "AZT-OCP-M01.openshift.local"

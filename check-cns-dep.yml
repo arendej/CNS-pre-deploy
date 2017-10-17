@@ -1,25 +1,42 @@
 - name: Notify of Red Hat repos/channels
   debug: msg="REPOS MUST BE ATTACHED.. rhel-7-server-rpms & rhel-7-server-rh-common-rpms"
-  when: "'masters' in {{ group_names }}"
-- name: Enable gluster for rhel repo.
-  shell: "subscription-manager repos --enable=rh-gluster-3-for-rhel-7-server-rpms"
-  when: "'masters' in {{ group_names }}"
+  when: inventory_hostname in groups['masters']
+
+- name: Add gluster subscription pool ID
+  shell: "sudo sudo subscription-manager attach --pool=8a85f9815d3b1afc015d3b8176423c4f"
+  ignore_errors: true
+  #redhat_subscription:
+  #  state: present
+  #  pool_ids: 8a85f9815d3b1afc015d3b8176423c4f
+# when: inventory_hostname in groups['nodes']
+
+- name: Enable gluster for rhel repo
+  shell: "sudo subscription-manager repos --enable=rh-gluster-3-for-rhel-7-server-rpms"
+#  register: repo_result
+  ignore_errors: true
+#  debug: var=repo_result
+# when: inventory_hostname in groups['masters']
+
 - name: Check CNS deploy is installed on masters
   yum: pkg=cns-deploy state=installed
-  when: "'masters' in {{ group_names }}"
-- name: Check heketi is installed on masters
+  when: inventory_hostname in groups['masters']
+
+- name: Check heketi is installed #on masters
   yum: pkg=heketi-client state=installed
-  when: "'masters' in {{ group_names }}"
+# when: inventory_hostname in groups['masters']
+
 - name: atomic packages needed..
   yum: pkg={{item}} state=installed
   with_items:
     - atomic-openshift-clients
     - atomic-openshift
+
 - name: check gluster client is installed
   yum: pkg={{item}} state=installed
   with_items:
     - glusterfs
     - glusterfs-fuse
+
 - name: Assert that dm_thin_pool is there
   modprobe: name=dm_thin_pool state=present
-  when: "'gluster' in {{ group_names }}"
+  when: inventory_hostname in groups['gluster']

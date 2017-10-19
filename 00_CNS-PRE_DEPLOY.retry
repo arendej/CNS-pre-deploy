@@ -1,3 +1,10 @@
+AZT-OCP-A01.openshift.local
+AZT-OCP-A02.openshift.local
+AZT-OCP-I01.openshift.local
 AZT-OCP-M01.openshift.local
 AZT-OCP-M02.openshift.local
 AZT-OCP-M03.openshift.local
+AZT-OCP-S01.openshift.local
+gluster1.openshift.local
+gluster2.openshift.local
+gluster3.openshift.local

@@ -14,19 +14,12 @@
     - "111"
     - "3260"
     - "24006"
-
-- name: ..iptables continued for multiport..
-  shell: iptables -A OS_FIREWALL_ALLOW -p tcp -m state --state NEW --match multiport --dports 49152:49664 -j ACCEPT
-  #shell: |
-  #  -A OS_FIREWALL_ALLOW -p tcp -m state --state NEW -m tcp --dport 24007 -j ACCEPT;
-  #  -A OS_FIREWALL_ALLOW -p tcp -m state --state NEW -m tcp --dport 24008 -j ACCEPT;
-  #  -A OS_FIREWALL_ALLOW -p tcp -m state --state NEW -m tcp --dport 2222 -j ACCEPT;
-  #  -A OS_FIREWALL_ALLOW -p tcp -m state --state NEW -m multiport --dports 49152:49664 -j ACCEPT;
-  #  -A OS_FIREWALL_ALLOW -p tcp -m state --state NEW -m tcp -- dport 24006 -j ACCEPT;
-  #  -A OS_FIREWALL_ALLOW -p tcp -m state --state NEW -m tcp -- dport 111 -j ACCEPT;
-  #  -A OS_FIREWALL_ALLOW -p tcp -m state --state NEW -m tcp -- dport 3260 -j ACCEPT;
+    - "8080"
+    - "8081"
+#- name: ..iptables continued for multiport..
+#  shell: iptables -A OS_FIREWALL_ALLOW -p tcp -m state --state NEW --match multiport --dports 49152:49664 -j ACCEPT
  # when: (ansible_distribution is "RedHat" and ansible_distribution_major_version == "6")
-  ignore_errors: yes
+#  ignore_errors: yes
 - name: "RHEL7 - firewalld - Run firewall changes for cns to deploy"
   firewalld:
     state: enabled
@@ -41,15 +34,24 @@
     - "111/tcp"
     - "3260/tcp"
     - "24006/tcp"
+    - "8080/tcp"
+    - "8081/tcp"
 #  when: (ansible_distribution is "RedHat" and ansible_distribution_major_version == "7")
+- name: save iptables
+  shell: service iptables save
 
-- name: reload iptables
+- name: restart iptables
   service:
     name: iptables
-    state: reloaded
+    state: restarted
   ignore_errors: yes
-- name: reload firewalld
+
+- name: restart firewalld
   service:
     name: firewalld
-    state: reloaded
+    state: restarted
+  ignore_errors: yes
+
+- name: SELinux change may be needed..
+  shell: sudo setsebool -P virt_sandbox_use_fusefs on; sudo setsebool -P virt_use_fusefs 1;
   ignore_errors: yes

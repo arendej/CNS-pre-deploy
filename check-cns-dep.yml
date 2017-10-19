@@ -17,6 +17,10 @@
 #  debug: var=repo_result
 # when: inventory_hostname in groups['masters']
 
+- name: Check Gluster is installed on glusters
+  yum: pkg=redhat-storage-server state=installed
+  when: inventory_hostname in groups['gluster']
+
 - name: Check CNS deploy is installed on masters
   yum: pkg=cns-deploy state=installed
   when: inventory_hostname in groups['masters']

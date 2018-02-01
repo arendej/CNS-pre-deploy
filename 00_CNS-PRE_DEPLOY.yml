@@ -10,11 +10,6 @@
     - include: fw-changes.yml
   # ping the intended cns storage nodes from the masters
     - include: ping-nodes.yml
-  # create CNS project
-    - include: create-cns-proj.yml
-  # give special block device access
-    - include: give-spec-blk-dev-access.yml
-  # deploy cns with creds to protect admin user
-    - include: deploy-cns.yml
+ 
   # output something to verify CNS
     - include: verify-cns.yml

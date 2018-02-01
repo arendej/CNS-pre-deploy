@@ -1,9 +1,8 @@
-- name: Notify of Red Hat repos/channels
-  debug: msg="REPOS MUST BE ATTACHED.. rhel-7-server-rpms & rhel-7-server-rh-common-rpms"
-  when: inventory_hostname in groups['masters']
+- name: Enable Red Hat repos for RHEL
+  shell: "sudo subscription-manager repos --enable=rhel-7-server-rpms --enable=rhel-7-server-rh-common-rpms"
 
 - name: Add gluster subscription pool ID
-  shell: "sudo sudo subscription-manager attach --pool=8a85f9815d3b1afc015d3b8176423c4f"
+  shell: "sudo subscription-manager attach --pool={{ gluster-pool-id }}"
   ignore_errors: true
   #redhat_subscription:
   #  state: present
@@ -15,19 +14,16 @@
 #  register: repo_result
   ignore_errors: true
 #  debug: var=repo_result
-# when: inventory_hostname in groups['masters']
-
-- name: Check Gluster is installed on glusters
-  yum: pkg=redhat-storage-server state=installed
   when: inventory_hostname in groups['gluster']
 
-- name: Check CNS deploy is installed on masters
-  yum: pkg=cns-deploy state=installed
-  when: inventory_hostname in groups['masters']
+- name: Check Gluster server is installed on glusters
+  yum: pkg=redhat-storage-server state=installed
+  when: inventory_hostname in groups['gluster']
 
 - name: Check heketi is installed #on masters
   yum: pkg=heketi-client state=installed
 # when: inventory_hostname in groups['masters']
+# It's OK if heketi client is everywhere
 
 - name: atomic packages needed..
   yum: pkg={{item}} state=installed

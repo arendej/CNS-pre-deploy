@@ -3,6 +3,7 @@
   connection: ssh
   become: yes
   user: ocpadmin
+  vars: var-to-set.yml
   tasks:
   # check for cns-deploy on the masters
     - include: check-cns-dep.yml

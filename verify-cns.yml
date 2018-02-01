@@ -1,5 +1,5 @@
 - name: Let the client talk to the container..
-  shell: export HEKETI_CLI_SERVER={{heketi-url}}
+  shell: "export HEKETI_CLI_SERVER=$(oc get routes heketi --no-headers -n {{ gsltr-group }} | awk '{print $2}')"
 #  when: inventory_hostname in groups['masters'] 
 - name: verify heketi is loaded with a topology..
   shell: heketi-cli topology info

@@ -1,1 +1,16 @@
-
+---
+galaxy_info:
+author: funixz
+description: An Ansible role for preparing OCP nodes for CNS
+company: Arctiq Inc.
+license: GPL v2
+min_ansible_version: 2.2
+platforms:
+- name: RHEL
+versions:
+- 7
+categories:
+- cloud
+- storage
+#dependencies:
+#- { role: "?" }

@@ -4,4 +4,4 @@
 gluster-pool-id: 
 
 # provide your gluster group name/ namespace
-gsltr-group: gluster
+gsltr-group: "gluster"

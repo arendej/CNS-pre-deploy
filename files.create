@@ -1,7 +1,0 @@
-check-cns-dep.yml
-opt-fw-changes.yml
-ping-nodes.yml
-create-cns-proj.yml
-give-spec-blk-dev-access.yml
-deploy-cns.yml
-verify-cns.yml

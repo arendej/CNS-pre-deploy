@@ -37,6 +37,11 @@
     - glusterfs
     - glusterfs-fuse
 
-- name: Assert that dm_thin_pool is there
-  modprobe: name=dm_thin_pool state=present
+- name: Check for needed modules
+  modprobe: name={{ item }} state=present
+  with_items:
+    - dm_thin_pool
+    - dm_multipath
+    - target_core_user
   when: inventory_hostname in groups['gluster']
+  

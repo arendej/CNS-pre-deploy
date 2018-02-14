@@ -9,6 +9,7 @@
     - include: check-cns-dep.yml
   # block prep:
     - include: block-prep.yml
+      when: block == "yes"
   # optional iptables/firewall changes
     - include: fw-changes.yml
   # ping the intended cns storage nodes from the masters

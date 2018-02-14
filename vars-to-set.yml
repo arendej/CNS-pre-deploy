@@ -1,7 +1,10 @@
-# Please set the following vars before running.
----
-#the gluster pool id from Red Hat portal
+---# Please set the following vars before running.
+#
+#the gluster pool id from Red Hat portal goes here.
 gluster-pool-id=
-
+#
 # provide your gluster group name/ namespace
 gsltr-group=gluster
+#
+# Will you need block-based gluster? change to yes, if so.
+block=no

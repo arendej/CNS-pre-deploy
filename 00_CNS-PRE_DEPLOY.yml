@@ -1,4 +1,4 @@
---- # This playbook is supposed to do the pre-deploy checks prior to running cns-deploy
+--- # This playbook is supposed to do the pre-deploy checks prior to doing openshift-ansible setup of CNS.
 - hosts: all
   connection: ssh
   become: yes
@@ -7,10 +7,11 @@
   tasks:
   # check for cns-deploy on the masters
     - include: check-cns-dep.yml
+  # block prep:
+    - include: block-prep.yml
   # optional iptables/firewall changes
     - include: fw-changes.yml
   # ping the intended cns storage nodes from the masters
     - include: ping-nodes.yml
- 
   # output something to verify CNS
     - include: verify-cns.yml
